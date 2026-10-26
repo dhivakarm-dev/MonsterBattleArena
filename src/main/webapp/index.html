@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monster Battle Arena</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+
+<section id="loginScreen" class="screen active">
+    <div class="login-box">
+        <div class="logo">⚔️</div>
+        <h1>Monster Battle Arena</h1>
+        <p class="subtitle">Enter the arena. Train. Battle. Become the champion.</p>
+
+        <input type="text" id="usernameInput" placeholder="Enter Username">
+        <input type="password" id="passwordInput" placeholder="Enter Password">
+
+        <button class="primary-btn" onclick="login()">ENTER ARENA</button>
+
+        <p id="loginError" class="error-text"></p>
+    </div>
+</section>
+
+
+<!-- ================= MAIN MENU ================= -->
+
+<section id="menuScreen" class="screen">
+
+    <div class="top-bar">
+        <div>
+            <h2>Monster Battle Arena</h2>
+            <p>Welcome, <span id="menuUsername">Player</span></p>
+        </div>
+
+        <div class="player-stats">
+            <span>⭐ Level <b id="menuLevel">1</b></span>
+            <span>🪙 <b id="menuCoins">100</b></span>
+            <span>⚡ <b id="menuEnergy">50</b></span>
+        </div>
+    </div>
+
+    <div class="menu-container">
+
+        <div class="menu-card" onclick="openBattleMode()">
+            <div class="menu-icon">⚔️</div>
+            <h3>Battle Mode</h3>
+            <p>Fight against AI or another player.</p>
+        </div>
+
+        <div class="menu-card" onclick="openPuzzleMode()">
+            <div class="menu-icon">🧩</div>
+            <h3>Puzzle Mode</h3>
+            <p>Solve logic puzzles and earn Puzzle Energy.</p>
+        </div>
+
+        <div class="menu-card" onclick="openMonsters()">
+            <div class="menu-icon">🐲</div>
+            <h3>My Monsters</h3>
+            <p>View and unlock your monster collection.</p>
+        </div>
+
+        <div class="menu-card" onclick="openProfile()">
+            <div class="menu-icon">👤</div>
+            <h3>Profile</h3>
+            <p>View your player progress.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= BATTLE MODE ================= -->
+
+<section id="battleModeScreen" class="screen">
+
+    <div class="page-header">
+        <button class="back-btn" onclick="backToMenu()">← Back</button>
+        <h2>⚔️ Battle Mode</h2>
+    </div>
+
+    <div class="mode-container">
+
+        <div class="mode-card" onclick="startAISelection()">
+            <div class="mode-icon">🤖</div>
+            <h3>AI Battle</h3>
+            <p>Battle against a computer-controlled monster.</p>
+            <button class="primary-btn">PLAY AI</button>
+        </div>
+
+        <div class="mode-card" onclick="startPvPSelection()">
+            <div class="mode-icon">👥</div>
+            <h3>Local PvP</h3>
+            <p>Two players can battle on the same computer.</p>
+            <button class="secondary-btn">PLAY PvP</button>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MONSTER SELECTION ================= -->
+
+<section id="monsterSelectionScreen" class="screen">
+
+    <div class="page-header">
+        <button class="back-btn" onclick="backToMenu()">← Back</button>
+        <h2 id="selectionTitle">Choose Your Monster</h2>
+    </div>
+
+    <p id="selectionInstruction" class="selection-instruction">
+        Select your monster.
+    </p>
+
+    <div class="monster-grid">
+
+        <!-- BLAZION -->
+
+        <div class="monster-card selectable"
+             id="select-Blazion"
+             onclick="selectMonster('Blazion')">
+
+            <div class="monster-icon">🔥</div>
+
+            <h3>Blazion</h3>
+
+            <p class="monster-type fire">FIRE</p>
+
+            <div class="monster-info">
+                <span>❤️ 100 HP</span>
+                <span>⚔️ 25 ATK</span>
+            </div>
+
+            <div id="BlazionSelectStatus" class="selection-status">
+                ✓ OWNED
+            </div>
+        </div>
+
+
+        <!-- AQUARION -->
+
+        <div class="monster-card locked"
+             id="select-Aquarion"
+             onclick="selectMonster('Aquarion')">
+
+            <div class="monster-icon">💧</div>
+
+            <h3>Aquarion</h3>
+
+            <p class="monster-type water">WATER</p>
+
+            <div class="monster-info">
+                <span>❤️ 110 HP</span>
+                <span>⚔️ 22 ATK</span>
+            </div>
+
+            <div id="AquarionSelectStatus" class="selection-status">
+                🔒 LOCKED
+            </div>
+        </div>
+
+
+        <!-- FLORAGON -->
+
+        <div class="monster-card locked"
+             id="select-Floragon"
+             onclick="selectMonster('Floragon')">
+
+            <div class="monster-icon">🌿</div>
+
+            <h3>Floragon</h3>
+
+            <p class="monster-type grass">GRASS</p>
+
+            <div class="monster-info">
+                <span>❤️ 105 HP</span>
+                <span>⚔️ 24 ATK</span>
+            </div>
+
+            <div id="FloragonSelectStatus" class="selection-status">
+                🔒 LOCKED
+            </div>
+        </div>
+
+
+        <!-- VOLTIX -->
+
+        <div class="monster-card locked"
+             id="select-Voltix"
+             onclick="selectMonster('Voltix')">
+
+            <div class="monster-icon">⚡</div>
+
+            <h3>Voltix</h3>
+
+            <p class="monster-type electric">ELECTRIC</p>
+
+            <div class="monster-info">
+                <span>❤️ 95 HP</span>
+                <span>⚔️ 28 ATK</span>
+            </div>
+
+            <div id="VoltixSelectStatus" class="selection-status">
+                🔒 LOCKED
+            </div>
+        </div>
+
+    </div>
+
+    <button class="primary-btn continue-btn"
+            id="continueSelectionBtn"
+            onclick="confirmMonster()"
+            disabled>
+        CONTINUE
+    </button>
+
+</section>
+
+
+<!-- ================= BATTLE SCREEN ================= -->
+
+<section id="battleScreen" class="screen">
+
+    <div class="battle-top">
+
+        <button class="back-btn" onclick="exitBattle()">← Exit</button>
+
+        <div>
+            <h2>⚔️ Battle Arena</h2>
+            <p id="battleModeLabel">AI Battle</p>
+        </div>
+
+        <div class="battle-energy">
+            ⚡ <span id="battleEnergy">50</span>
+        </div>
+
+    </div>
+
+
+    <div id="battleMessage" class="battle-message">
+        Battle Start!
+    </div>
+
+
+    <div class="battle-arena">
+
+        <!-- ENEMY -->
+
+        <div class="fighter enemy-fighter">
+
+            <div class="fighter-info">
+                <h3 id="enemyName">Enemy</h3>
+
+                <div class="hp-container">
+                    <div class="hp-bar">
+                        <div id="enemyHPBar" class="hp-fill"></div>
+                    </div>
+
+                    <span id="enemyHPText">100 / 100</span>
+                </div>
+            </div>
+
+            <div id="enemyMonsterDisplay"
+                 class="battle-monster enemy-monster">
+                🤖
+            </div>
+
+        </div>
+
+
+        <div class="battle-vs">VS</div>
+
+
+        <!-- PLAYER -->
+
+        <div class="fighter player-fighter">
+
+            <div id="playerMonsterDisplay"
+                 class="battle-monster player-monster">
+                🔥
+            </div>
+
+            <div class="fighter-info">
+
+                <h3 id="playerName">Blazion</h3>
+
+                <p>
+                    Level <span id="battleLevel">1</span>
+                </p>
+
+                <div class="hp-container">
+
+                    <div class="hp-bar">
+                        <div id="playerHPBar" class="hp-fill"></div>
+                    </div>
+
+                    <span id="playerHPText">100 / 100</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ATTACK BUTTONS -->
+
+    <div class="attack-panel">
+
+        <button id="normalAttackBtn"
+                class="attack-btn normal"
+                onclick="toggleAttackMenu('normal')">
+            ⚔️ Normal Attack
+            <small>4 Basic Attacks</small>
+        </button>
+
+        <button id="energyAttackBtn"
+                class="attack-btn energy"
+                onclick="toggleAttackMenu('energy')">
+            ⚡ Energy Attack
+            <small>Uses Puzzle Energy</small>
+        </button>
+
+        <button id="defenseAttackBtn"
+                class="attack-btn defense"
+                onclick="toggleAttackMenu('defense')">
+            🛡️ Defence
+            <small>Protect & counter</small>
+        </button>
+
+        <button id="oneBlowBtn"
+                class="attack-btn ultimate"
+                onclick="oneBlow()">
+            💥 One Blow
+            <small id="oneBlowInfo">High cost • Once/Battle</small>
+        </button>
+
+        <button id="switchMonsterBtn"
+                class="attack-btn switch-monster"
+                onclick="openBattleSwitch()">
+            🔄 Switch Monster
+            <small>Change active monster</small>
+        </button>
+
+    </div>
+
+    <div id="attackChoicePanel" class="attack-choice-panel" style="display:none;">
+        <div class="attack-choice-header">
+            <h3 id="attackChoiceTitle">Choose Attack</h3>
+            <button class="close-choice-btn" onclick="closeAttackMenu()">✕</button>
+        </div>
+        <div id="attackChoiceList" class="attack-choice-list"></div>
+    </div>
+
+    <div id="battleSwitchPanel" class="battle-switch-panel" style="display:none;">
+        <div class="attack-choice-header">
+            <h3>🔄 Switch Monster</h3>
+            <button class="close-choice-btn" onclick="closeBattleSwitch()">✕</button>
+        </div>
+        <div id="battleSwitchList" class="battle-switch-list"></div>
+    </div>
+
+</section>
+
+
+<!-- ================= RESULT ================= -->
+
+<section id="resultScreen" class="screen">
+
+    <div class="result-box">
+
+        <div id="resultIcon" class="result-icon">🏆</div>
+
+        <h1 id="resultTitle">Victory!</h1>
+
+        <p id="resultMessage">
+            You defeated your opponent!
+        </p>
+
+        <div class="reward-box">
+
+            <div>
+                ⭐ XP
+                <strong id="resultXP">0</strong>
+            </div>
+
+            <div>
+                🪙 Coins
+                <strong id="resultCoins">0</strong>
+            </div>
+
+        </div>
+
+        <button class="primary-btn" onclick="backToMenu()">
+            MAIN MENU
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PUZZLE ================= -->
+
+
+<section id="puzzleScreen" class="screen">
+
+    <div class="page-header">
+
+        <button class="back-btn" onclick="backToMenu()">
+            ← Back
+        </button>
+
+        <h2>🧩 Puzzle Mode</h2>
+
+        <div class="energy-display">
+            ⚡ <span id="puzzleEnergy">50</span>
+        </div>
+
+    </div>
+
+    <div class="puzzle-container">
+
+        <div class="puzzle-card">
+
+            <span class="difficulty">EASY</span>
+
+            <h2>Database Puzzle</h2>
+
+            <p id="puzzleQuestion" class="puzzle-question">
+                Loading puzzle...
+            </p>
+
+            <input
+                type="text"
+                id="puzzleAnswer"
+                placeholder="Enter your answer"
+            >
+
+            <button
+                id="submitPuzzleBtn"
+                onclick="checkPuzzle()">
+                SUBMIT ANSWER
+            </button>
+
+            <p id="puzzleResult"></p>
+
+            <button
+                id="nextPuzzleBtn"
+                class="secondary-btn"
+                onclick="resetPuzzle()"
+                style="display:none;">
+                NEXT PUZZLE
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= MONSTERS ================= -->
+
+<section id="monsterScreen" class="screen">
+
+    <div class="page-header">
+        <button class="back-btn" onclick="backToMenu()">← Back</button>
+        <h2>🐲 My Monsters</h2>
+        <div class="energy-display">⚡ <span id="collectionEnergy">50</span></div>
+    </div>
+
+    <p class="selection-instruction">Click an owned monster to view its level, attacks, stats and type advantages.</p>
+
+    <div class="collection-grid">
+
+        <div class="collection-card owned clickable-monster" id="collection-Blazion" onclick="openMonsterDetails('Blazion')">
+            <div class="collection-icon">🔥</div>
+            <h3>Blazion</h3>
+            <p class="monster-type fire">FIRE</p>
+            <p>Level <strong id="collectionLevel-Blazion">5</strong></p>
+            <p>HP: <span id="collectionHP-Blazion">100</span></p>
+            <p>Attack: <span id="collectionATK-Blazion">25</span></p>
+            <span id="BlazionStatus" class="owned-label">✓ OWNED • VIEW DETAILS</span>
+        </div>
+
+        <div class="collection-card clickable-monster" id="collection-Aquarion" onclick="openMonsterDetails('Aquarion')">
+            <div class="collection-icon">💧</div>
+            <h3>Aquarion</h3>
+            <p class="monster-type water">WATER</p>
+            <p>Level <strong id="collectionLevel-Aquarion">1</strong></p>
+            <p>HP: <span id="collectionHP-Aquarion">110</span></p>
+            <p>Attack: <span id="collectionATK-Aquarion">22</span></p>
+            <div id="AquarionStatus"><button class="unlock-btn" onclick="event.stopPropagation(); unlockMonster('Aquarion')">🔓 Unlock - 50 ⚡</button></div>
+        </div>
+
+        <div class="collection-card clickable-monster" id="collection-Floragon" onclick="openMonsterDetails('Floragon')">
+            <div class="collection-icon">🌿</div>
+            <h3>Floragon</h3>
+            <p class="monster-type grass">GRASS</p>
+            <p>Level <strong id="collectionLevel-Floragon">1</strong></p>
+            <p>HP: <span id="collectionHP-Floragon">105</span></p>
+            <p>Attack: <span id="collectionATK-Floragon">24</span></p>
+            <div id="FloragonStatus"><button class="unlock-btn" onclick="event.stopPropagation(); unlockMonster('Floragon')">🔓 Unlock - 50 ⚡</button></div>
+        </div>
+
+        <div class="collection-card clickable-monster" id="collection-Voltix" onclick="openMonsterDetails('Voltix')">
+            <div class="collection-icon">⚡</div>
+            <h3>Voltix</h3>
+            <p class="monster-type electric">ELECTRIC</p>
+            <p>Level <strong id="collectionLevel-Voltix">1</strong></p>
+            <p>HP: <span id="collectionHP-Voltix">95</span></p>
+            <p>Attack: <span id="collectionATK-Voltix">28</span></p>
+            <div id="VoltixStatus"><button class="unlock-btn" onclick="event.stopPropagation(); unlockMonster('Voltix')">🔓 Unlock - 50 ⚡</button></div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= MONSTER DETAILS ================= -->
+
+<section id="monsterDetailsScreen" class="screen">
+    <div class="page-header">
+        <button class="back-btn" onclick="closeMonsterDetails()">← Back</button>
+        <h2>🐲 Monster Details</h2>
+        <div class="energy-display">⚡ <span id="detailsEnergy">50</span></div>
+    </div>
+
+    <div class="monster-details-container">
+        <div class="monster-details-hero">
+            <div id="detailsIcon" class="details-icon">🔥</div>
+            <div>
+                <h1 id="detailsName">Blazion</h1>
+                <p id="detailsType" class="monster-type fire">FIRE</p>
+                <p>Level <strong id="detailsLevel">5</strong></p>
+                <div class="xp-bar"><div id="detailsXPBar" class="xp-fill"></div></div>
+                <p class="details-muted"><span id="detailsXP">0</span> / <span id="detailsXPRequired">500</span> XP</p>
+            </div>
+        </div>
+
+        <div class="details-stats-grid">
+            <div><span>❤️ HP</span><strong id="detailsHP">100</strong></div>
+            <div><span>⚔️ Attack</span><strong id="detailsATK">25</strong></div>
+            <div><span>🛡️ Defence</span><strong id="detailsDEF">20</strong></div>
+            <div><span>⚡ Energy</span><strong id="detailsMaxEnergy">100</strong></div>
+        </div>
+
+        <div class="details-section">
+            <div class="details-section-heading">
+                <h3>⚔️ Basic Attacks</h3>
+                <span>4 attacks</span>
+            </div>
+            <div id="detailsBasicAttacks" class="details-attack-grid"></div>
+        </div>
+
+        <div class="details-section">
+            <div class="details-section-heading">
+                <h3>⚡ Energy Attacks</h3>
+                <span>Unlocked with monster level</span>
+            </div>
+            <div id="detailsEnergyAttacks" class="details-attack-grid"></div>
+        </div>
+
+        <div class="details-section">
+            <div class="details-section-heading">
+                <h3>🛡️ Defence Skills</h3>
+                <span>Reduce incoming damage</span>
+            </div>
+            <div id="detailsDefenseAttacks" class="details-attack-grid"></div>
+        </div>
+
+        <div class="details-section ultimate-section">
+            <div class="details-section-heading">
+                <h3>💥 One Blow</h3>
+                <span>Once per battle</span>
+            </div>
+            <div id="detailsOneBlow" class="ultimate-detail-card"></div>
+        </div>
+
+        <div class="details-section">
+            <div class="details-section-heading">
+                <h3>🔥 Type Advantage</h3>
+                <span id="detailsTypeLabel">FIRE</span>
+            </div>
+            <div class="type-advantage-grid">
+                <div class="advantage-box strong"><span>🟢 Strong Against</span><strong id="detailsStrongAgainst">GRASS</strong></div>
+                <div class="advantage-box weak"><span>🔴 Weak Against</span><strong id="detailsWeakAgainst">WATER</strong></div>
+                <div class="advantage-box neutral"><span>⚪ Neutral</span><strong id="detailsNeutralAgainst">ELECTRIC</strong></div>
+            </div>
+        </div>
+
+        <button id="upgradeMonsterBtn" class="primary-btn upgrade-monster-btn" onclick="upgradeCurrentMonster()">⬆️ Upgrade Monster</button>
+        <p id="upgradeMonsterInfo" class="upgrade-info"></p>
+    </div>
+</section>
+
+<!-- ================= PROFILE ================= -->
+
+<section id="profileScreen" class="screen">
+
+    <div class="page-header">
+
+        <button class="back-btn" onclick="backToMenu()">
+            ← Back
+        </button>
+
+        <h2>👤 Player Profile</h2>
+
+    </div>
+
+
+    <div class="profile-container">
+
+        <div class="profile-avatar">
+            👤
+        </div>
+
+        <h2 id="profileUsername">
+            Player
+        </h2>
+
+        <div class="profile-stats">
+
+            <div class="profile-stat">
+                <span>⭐ Level</span>
+                <strong id="profileLevel">1</strong>
+            </div>
+
+            <div class="profile-stat">
+                <span>XP</span>
+                <strong id="profileXP">0</strong>
+            </div>
+
+            <div class="profile-stat">
+                <span>🪙 Coins</span>
+                <strong id="profileCoins">100</strong>
+            </div>
+
+            <div class="profile-stat">
+                <span>⚡ Puzzle Energy</span>
+                <strong id="profileEnergy">50</strong>
+            </div>
+
+            <div class="profile-stat">
+                <span>🐲 Monsters</span>
+                <strong id="profileMonsters">1</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script src="game.js"></script>
+
+</body>
+</html>
